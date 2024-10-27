@@ -1,7 +1,7 @@
-// WebSocketService.js
 class WebSocketService {
     constructor() {
         this.socket = null;
+        this.onOpenCallback = null;
     }
 
     connect(url) {
@@ -9,6 +9,9 @@ class WebSocketService {
 
         this.socket.onopen = () => {
             console.log("WebSocket connected");
+            if (this.onOpenCallback) {
+                this.onOpenCallback();
+            }
         };
 
         this.socket.onclose = () => {
@@ -20,17 +23,28 @@ class WebSocketService {
         };
     }
 
+    // Thiết lập callback cho sự kiện mở kết nối WebSocket
+    onOpen(callback) {
+        this.onOpenCallback = callback;
+    }
+
     sendMessage(message) {
-        if (this.socket.readyState === WebSocket.OPEN) {
+        if (this.socket && this.socket.readyState === WebSocket.OPEN) {
             this.socket.send(JSON.stringify(message));
+        } else {
+            console.warn("WebSocket is not open. Message not sent:", message);
         }
     }
 
     onMessage(callback) {
-        this.socket.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            callback(message);
-        };
+        if (this.socket) {
+            this.socket.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                callback(message);
+            };
+        } else {
+            console.warn("WebSocket is not initialized. Cannot set onMessage callback.");
+        }
     }
 }
 
