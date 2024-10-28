@@ -16,6 +16,7 @@ function App() {
     WebSocketService.onMessage((message) => {
       // const message = JSON.parse(message)
       console.log("Received message:", message);
+
       switch (message.sender) {
         case "react":
           switch (message.type) {
@@ -29,10 +30,19 @@ function App() {
         case "esp8266":
           switch (message.type) {
             case "cmd":
-              toast.success(message.body);
+              toast.success(message?.body);
               break;
             case "warn":
-              toast.warn(message.body);
+              toast.warn(message?.body?.msg);
+              break;
+            default:
+              break;
+          }
+          break;
+        case "server":
+          switch (message.type) {
+            case "error":
+              toast.success(message?.body?.msg);
               break;
             default:
               break;
