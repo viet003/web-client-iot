@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { SignInModal } from "../containers";
 import { HiMenu, HiX } from "react-icons/hi";
-import Logo from "../assets/logo.png"
+import { useSelector } from "react-redux";
+import Logo from "../assets/logo.png";
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const { isLoggedIn } = useSelector(state => state.auth);
 
   const menuItems = [
     { id: 1, name: "Trang chủ", href: "#" },
@@ -38,15 +43,22 @@ const Header = () => {
           </nav>
 
           <div className="items-center hidden space-x-4 md:flex">
-            <button
-              className="px-4 py-2 text-white transition-all duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              aria-label="Login"
-            >
-              <span className="flex items-center">
-                <FaUserCircle className="mr-2" />
-                Login
-              </span>
-            </button>
+            {
+              isLoggedIn ? (
+                <div />
+              ) : (
+                <button
+                  className="px-4 py-2 text-white transition-all duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  aria-label="Login"
+                  onClick={() => setToggle(!toggle)} // Sửa tại đây
+                >
+                  <span className="flex items-center">
+                    <FaUserCircle className="mr-2" />
+                    Đăng nhập
+                  </span>
+                </button>
+              )
+            }
           </div>
 
           <div className="flex items-center md:hidden">
@@ -78,18 +90,27 @@ const Header = () => {
                 {item.name}
               </button>
             ))}
-            <button
-              className="w-full px-4 py-2 mt-4 text-white transition-all duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              aria-label="Login"
-            >
-              <span className="flex items-center justify-center">
-                <FaUserCircle className="mr-2" />
-                Login
-              </span>
-            </button>
+            {
+              isLoggedIn ? (
+                <div />
+              ) : (
+                <button
+                  className="w-full px-4 py-2 mt-4 text-white transition-all duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  aria-label="Login"
+                  onClick={() => setToggle(!toggle)} // Sửa tại đây
+                >
+                  <span className="flex items-center justify-center">
+                    <FaUserCircle className="mr-2" />
+                    Đăng nhập
+                  </span>
+                </button>
+              )
+            }
           </div>
         </div>
       )}
+
+      <SignInModal isOpen={toggle} setIsOpen={setToggle} />
     </header>
   );
 };
