@@ -1,4 +1,4 @@
-import { Header, Footer, Sectiontable } from "../../components";
+import { Sectiontable } from "../../components";
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -94,10 +94,7 @@ function App() {
   return (
     <div className="flex flex-col">
       <ToastContainer />
-      <Header />
-      <div className="h-[67px]"></div>
       <Sectiontable isOpen={isOpen} setIsOpen={setIsOpen} data={data} />
-      <Footer />
     </div>
   );
 }
