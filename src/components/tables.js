@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { FaSort, FaSortUp, FaSortDown, FaSearch } from "react-icons/fa";
+import { useState } from "react";
 
 const Sectiontable = ({ isOpen, setIsOpen, data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [searchTerm, setSearchTerm] = useState("");
-
+  
+  console.log(data);
   const itemsPerPage = 6;
 
   const handleSort = (key) => {
@@ -23,9 +24,9 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
       let aValue, bValue;
 
       // Lấy giá trị cần sắp xếp tùy thuộc vào cột
-      if (sortConfig.key === "username") {
-        aValue = a.Card.Users[0]?.username || "";
-        bValue = b.Card.Users[0]?.username || "";
+      if (sortConfig.key === "user_name") {
+        aValue = a.Card.Users[0]?.user_name || "";
+        bValue = b.Card.Users[0]?.user_name || "";
       } else if (sortConfig.key === "type") {
         aValue = a.Card?.type;
         bValue = b.Card?.type;
@@ -46,10 +47,10 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
 
   const filteredData = getSortedData().filter((entry) => {
     return (
-      entry.cardId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      entry.card_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entry.status.toString().includes(searchTerm) ||
       entry.time.includes(searchTerm) ||
-      (entry.Card && entry.Card.Users[0]?.username.toLowerCase().includes(searchTerm.toLowerCase()))
+      (entry.Card && entry.Card.Users[0]?.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
@@ -83,7 +84,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
               <div className="relative w-full sm:w-64">
                 <input
                   type="text"
-                  placeholder="Tìm kiếm theo mã thẻ hoặc username..."
+                  placeholder="Tìm kiếm theo mã thẻ hoặc user_name..."
                   className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -108,15 +109,15 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
                   <tr className="bg-gray-50">
                     <th
                       className="px-6 py-3 text-sm font-semibold text-left text-gray-600 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleSort("cardId")}
+                      onClick={() => handleSort("card_id")}
                     >
-                      Mã thẻ {getSortIcon("cardId")}
+                      Mã thẻ {getSortIcon("card_id")}
                     </th>
                     <th
                       className="px-6 py-3 text-sm font-semibold text-left text-gray-600 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleSort("username")}
+                      onClick={() => handleSort("user_name")}
                     >
-                      Tên người dùng {getSortIcon("username")}
+                      Tên người dùng {getSortIcon("user_name")}
                     </th>
                     <th
                       className="px-6 py-3 text-sm font-semibold text-left text-gray-600 cursor-pointer hover:bg-gray-100"
@@ -145,10 +146,10 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
                       className="transition-colors duration-200 hover:bg-gray-50"
                     >
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        {entry.cardId}
+                        {entry.card_id}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        {entry.Card?.Users[0]?.username || "Khách"}
+                        {entry.Card?.Users[0]?.user_name || "Khách"}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
                         {entry.status === 0 ? "Xe vào" : "Xe ra"}

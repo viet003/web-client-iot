@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useDispatch } from "react-redux"
+import * as actions from "../../store/actions"
 
 const SignInModal = ({ isOpen, setIsOpen }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [type, setType] = useState(1); // Set default value to 1
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });
+
+  const dispatch = useDispatch()
 
   const emailDomains = ["@gmail.com", "@yahoo.com", "@outlook.com", "@hotmail.com"];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,6 +50,10 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
     setErrors((prev) => ({ ...prev, password: validatePassword(value) }));
   };
 
+  const handleTypeChange = (e) => {
+    setType(Number(e.target.value)); // Update type based on selected option
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const emailError = validateEmail(email);
@@ -57,7 +66,16 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
 
     setLoading(true);
     // Simulate API call
+    const response = await dispatch(actions.login({ email : email, pass_word: password, type: type }))
+    if (response?.status === 200 && response?.data?.err === 0) {
+      setLoading(false)
+      setIsOpen(false)
+    } else {
+      setLoading(false)
+    }
+    
     await new Promise((resolve) => setTimeout(resolve, 2000));
+    console.log(response?.data);
     setLoading(false);
   };
 
@@ -98,7 +116,7 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
                 aria-label="Sign in with Twitter"
               >
                 <FaTwitter className="text-xl" />
-                <span>Đằng nhập với Twitter</span>
+                <span>Đăng nhập với Twitter</span>
               </button>
             </div>
 
@@ -168,6 +186,19 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
                     {errors.password}
                   </p>
                 )}
+              </div>
+
+              <div>
+                <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-700">Loại tài khoản</label>
+                <select
+                  id="type"
+                  value={type}
+                  onChange={handleTypeChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value={1}>Quản lý</option>
+                  <option value={2}>Quản trị viên</option>
+                </select>
               </div>
 
               <button

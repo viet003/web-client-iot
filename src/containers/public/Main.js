@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { path } from "../../ultils/containts"
 import { Header, Footer } from '../../components';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';

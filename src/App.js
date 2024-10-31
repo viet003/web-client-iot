@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { SignInModal, Main, Home } from "./containers/";
+import { SignInModal, Main, Home, ControlPanel } from "./containers/";
 import { path } from "./ultils/containts";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
       <Routes>
         <Route path={path.MAIN} element={<Main />}>
           <Route index element={<Home />} />
+          <Route path={path.CONTROLL} element={<ControlPanel />} />
           {/* <Route path={path.HOME} element={<Home />} />
           <Route path={path.PROFILE} element={<Profile />} />
           <Route path={path.LOOKUP} element={<Lookup />} />

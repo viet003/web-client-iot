@@ -1,5 +1,6 @@
 export const path = {
     MAIN : "/",
+    CONTROLL: "/controll",
     LOGIN : "/signin",
     FORGOTPASS: "/forgetpass",
     PROFILE: "profile",
