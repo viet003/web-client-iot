@@ -1,47 +1,21 @@
 import { useState, useRef, useEffect } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { FaHome, FaUser, FaCog, FaEnvelope, FaSignOutAlt, FaBook, FaBriefcase, FaQuestionCircle } from "react-icons/fa";
+import User from "../assets/user.png"
+import { useSelector, useDispatch } from 'react-redux';
+import { jwtDecode } from "jwt-decode"
+import * as actions from "../store/actions"
+import { useNavigate } from 'react-router-dom';
+import { path } from './../ultils/containts';
+import { dropMenuItems } from "../ultils/items";
 
 const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const dropdownRef = useRef(null);
+  const { token } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  const navigator = useNavigate();
 
-  const menuItems = [
-    {
-      id: 1,
-      label: "Dashboard",
-      icon: <FaHome className="w-5 h-5" />,
-    },
-    {
-      id: 2,
-      label: "Profile",
-      icon: <FaUser className="w-5 h-5" />,
-      submenu: [
-        { id: "2-1", label: "View Profile", icon: <FaUser className="w-4 h-4" /> },
-        { id: "2-2", label: "Edit Profile", icon: <FaCog className="w-4 h-4" /> },
-      ],
-    },
-    {
-      id: 3,
-      label: "Services",
-      icon: <FaBriefcase className="w-5 h-5" />,
-      submenu: [
-        { id: "3-1", label: "Consulting", icon: <FaBook className="w-4 h-4" /> },
-        { id: "3-2", label: "Support", icon: <FaQuestionCircle className="w-4 h-4" /> },
-      ],
-    },
-    {
-      id: 4,
-      label: "Messages",
-      icon: <FaEnvelope className="w-5 h-5" />,
-    },
-    {
-      id: 5,
-      label: "Logout",
-      icon: <FaSignOutAlt className="w-5 h-5" />,
-    },
-  ];
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -85,7 +59,8 @@ const DropdownMenu = () => {
         aria-expanded={isOpen}
         className="flex items-center justify-between w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-white rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
-        <span className="font-medium">Menu</span>
+        <img src={User} alt="" className={`w-[41px] h-[41px] rounded-full object-cover`} />
+        <p className="text-primary cursor-pointer text-[13px] scale-x-0 w-0 sm:w-[57%] sm:scale-100 lg:text-[1rem]">{token ? jwtDecode(token).email : "No user"}</p>
         <FiChevronDown
           className={`w-5 h-5 transition-transform duration-300 ${isOpen ? "transform rotate-180" : ""}`}
         />
@@ -97,12 +72,26 @@ const DropdownMenu = () => {
           role="menu"
           aria-orientation="vertical"
         >
-          {menuItems.map((item) => (
+          {dropMenuItems.map((item) => (
             <div key={item.id}>
               <button
                 className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
                 role="menuitem"
-                onClick={() => item.submenu && handleSubmenuClick(item.id)}
+                onClick={() => {
+                  item.submenu && handleSubmenuClick(item.id);
+                  switch (item.id) {
+                    case 5:
+                      dispatch(actions.logout())
+                      navigator(path.MAIN)
+                      break;
+                    default:
+                      if (item.path) {
+                        navigator(item.path);
+                        setIsOpen(!isOpen);
+                      }
+                      break;
+                  }
+                }}
               >
                 <span className="mr-3">{item.icon}</span>
                 <span className="flex-grow text-left">{item.label}</span>
@@ -119,7 +108,7 @@ const DropdownMenu = () => {
                     <button
                       key={subItem.id}
                       className="flex items-center w-full px-4 py-2 text-sm text-gray-600 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"
-                      role="menuitem"
+                      rol="emenuitem"
                     >
                       <span className="mr-3">{subItem.icon}</span>
                       <span>{subItem.label}</span>

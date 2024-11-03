@@ -3,11 +3,12 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WebSocketService from "../../services/websocket";
+import useCheckLogin from "../../hooks/useCheckLogin";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
-
+  
   const getData = () => {
     if (WebSocketService.socket && WebSocketService.socket.readyState === WebSocketService.socket.OPEN) {
       WebSocketService.sendMessage({
@@ -16,6 +17,8 @@ function App() {
       });
     }
   }
+  
+  useCheckLogin();
 
   useEffect(() => {
     // Kết nối đến WebSocket Server

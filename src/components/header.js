@@ -9,18 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { path } from "../ultils/containts"
 import { DropdownMenu } from './';
+import { headerMenuItems } from './../ultils/items';
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
   const { isLoggedIn } = useSelector(state => state.auth);
   const navigator = useNavigate();
-
-  const menuItems = [
-    { id: 1, name: "Trang chủ", href: "#" },
-    { id: 2, name: "Giới thiệu", href: "#" },
-    { id: 3, name: "Dịch vụ", href: "#" },
-    { id: 4, name: "Liên hệ", href: "#" },
-  ];
 
   useEffect(() => {
     console.log(isLoggedIn);
@@ -41,7 +36,7 @@ const Header = () => {
           </div>
 
           <nav className="hidden space-x-8 md:flex">
-            {menuItems.map((item) => (
+            {headerMenuItems.map((item) => (
               <button
                 key={item.id}
                 className="px-3 py-2 text-sm font-medium text-gray-600 transition-colors duration-200 rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
@@ -109,7 +104,7 @@ const Header = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg sm:px-3">
-            {menuItems.map((item) => (
+            {headerMenuItems.map((item) => (
               <button
                 key={item.id}
                 className="block w-full px-3 py-2 text-base font-medium text-left text-gray-600 transition-colors duration-200 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"

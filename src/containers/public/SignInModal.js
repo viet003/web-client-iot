@@ -4,6 +4,8 @@ import { FaFacebook, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useDispatch } from "react-redux"
 import * as actions from "../../store/actions"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignInModal = ({ isOpen, setIsOpen }) => {
   const [email, setEmail] = useState("");
@@ -71,6 +73,7 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
       setLoading(false)
       setIsOpen(false)
     } else {
+      toast.warn(response?.data?.msg)
       setLoading(false)
     }
     
