@@ -2,16 +2,11 @@ export const path = {
     MAIN : "/",
     CONTROLL: "/controll",
     LOGIN : "/signin",
-    FORGOTPASS: "/forgetpass",
     PROFILE: "profile",
-    LOOKUP: "lookup",
-    COURSE: "course",
+    ADMIN: "/admin",
     HOME: "home",
-    ACCOUNT : "account",
-    TOPIC: "topic",
-    USER: "user",
-    ANNOUNCEMENT : "announcements",
-    PEOPLES: "peoples"
+    ACCOUNT:"accounts",
+    CARD:"cards"
 }
 
 // đường dẫn đến các trang
