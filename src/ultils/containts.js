@@ -1,9 +1,8 @@
 export const path = {
     MAIN : "/",
-    CONTROLL: "/controll",
-    LOGIN : "/signin",
+    CONTROLL: "controll",
     PROFILE: "profile",
-    ADMIN: "/admin",
+    ADMIN: "admin",
     HOME: "home",
     ACCOUNT:"accounts",
     CARD:"cards"

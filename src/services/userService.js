@@ -43,3 +43,18 @@ export const apiUpdateUserById = (payload) => new Promise((resolve, reject) => {
         reject(error)
     }
 })
+
+
+// xóa
+export const apiDeleteUserById = (payload) => new Promise((resolve, reject) => {
+    try {
+        const response = axiosConfig({
+            method: 'post',
+            url: 'api/user/delete',
+            data: payload
+        })
+        resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+})

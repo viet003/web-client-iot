@@ -13,3 +13,32 @@ export const apiLogin = (payload) => new Promise((resolve, reject) => {
         reject(error)
     }
 })
+
+// đăng kys
+export const apiRegisterService = (payload) => new Promise((resolve, reject) => {
+    try {
+        const response = axiosConfig({
+            method: 'post',
+            url: 'api/auth/register',
+            data: payload
+        })
+        resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+})
+
+
+// đổi mật khẩu
+export const apiChangePassWordService = (payload) => new Promise((resolve, reject) => {
+    try {
+        const response = axiosConfig({
+            method: 'post',
+            url: 'api/auth/changepass',
+            data: payload
+        })
+        resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+})

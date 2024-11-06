@@ -12,7 +12,7 @@ const Main = () => {
     
     useEffect(() => {
         if(!isLoggedIn) navigate(path.MAIN)
-    }, [isLoggedIn])
+    }, [])
     
     return (
         <div className="flex flex-col">

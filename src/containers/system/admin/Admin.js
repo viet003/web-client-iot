@@ -30,9 +30,10 @@ const Main = () => {
         setOpenMenu((prev) => prev = !prev);
     }
 
-    useEffect(() => {
-        if(!isLoggedIn || type !== 1) navigate(path.MAIN)      
-    }, [])
+    // useEffect(() => {
+    //     if(!isLoggedIn || type !== 1) navigate(`/${path.MAIN}`)      
+    // }, [])
+
     return (
         <div className="w-full h-screen">
             {

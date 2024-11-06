@@ -12,8 +12,9 @@ function App() {
           <Route path={path.ACCOUNT} element={<Account />} />
           <Route path={path.CARD} element={<Card />} />
         </Route>
+
         <Route path={path.MAIN} element={<Main />}>
-          <Route path={path.HOME} index element={<Home />} />
+          <Route index element={<Home />} />
           <Route path={path.CONTROLL} element={<ControlPanel />} />
           <Route path={path.PROFILE} element={<UserProfile />} />
         </Route>

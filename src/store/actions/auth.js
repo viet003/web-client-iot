@@ -22,6 +22,8 @@ export const login = (payload) => async (dispatch) => {
             type: actionTypes.LOGIN_FAIL,
             data: null
         })
+
+        return error.response
     }
 }
 

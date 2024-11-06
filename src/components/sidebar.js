@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { IoIosLogOut } from "react-icons/io";
-import { TbReportMoney } from "react-icons/tb";
 import { ImProfile } from "react-icons/im";
-import { MdFindInPage } from "react-icons/md";
 import { RiAccountPinBoxFill } from "react-icons/ri";
 import { path } from "../ultils/containts";
-import { FaUsers } from "react-icons/fa";
+import { IoCardSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 
@@ -64,8 +62,8 @@ const SideBar = (props) => {
                     onClick={() => handleNavigation("Quản lý thẻ xe", path.CARD)}
                     className={`${toggle ? "w-[3.5rem]" : "w-[12rem]"} sideData ${activeItem === path.CARD ? "text-black bg-white" : ""}`}
                 >
-                    <div className="mr-8 text-[1.7rem]"><TbReportMoney /></div>
-                    <div className={`${toggle ? "opacity-0 " : "transition-opacity "} text-[14px] whitespace-pre`}>Bảng lương</div>
+                    <div className="mr-8 text-[1.7rem]"><IoCardSharp /></div>
+                    <div className={`${toggle ? "opacity-0 " : "transition-opacity "} text-[14px] whitespace-pre`}>Thẻ xe</div>
                 </div>
             </div>
 

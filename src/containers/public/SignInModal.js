@@ -82,6 +82,7 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
           break;
       }
       setIsOpen(false)
+      console.log(response)
     } else {
       toast.warn(response?.data?.msg)
       setLoading(false)
