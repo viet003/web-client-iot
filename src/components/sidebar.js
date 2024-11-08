@@ -72,6 +72,7 @@ const SideBar = (props) => {
                     onClick={() => {
                         dispatch(actions.logout());
                         dispatch(actions.state({ active: null, content: null}))
+                        navigate(path.MAIN)
                     }}
                     className={`${toggle ? "w-[3.5rem]" : "w-[12rem]"} sideData ${activeItem === path.LOGIN ? "text-black bg-white" : ""}`}
                 >

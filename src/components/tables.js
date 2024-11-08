@@ -1,7 +1,8 @@
 import { FaSort, FaSortUp, FaSortDown, FaSearch } from "react-icons/fa";
 import { useState } from "react";
+import Spinner from "./spinner";
 
-const Sectiontable = ({ isOpen, setIsOpen, data }) => {
+const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,11 +26,11 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
 
       // Lấy giá trị cần sắp xếp tùy thuộc vào cột
       if (sortConfig.key === "user_name") {
-        aValue = a.Card.Users[0]?.user_name || "";
-        bValue = b.Card.Users[0]?.user_name || "";
+        aValue = a.card.Users[0]?.user_name || "";
+        bValue = b.card.Users[0]?.user_name || "";
       } else if (sortConfig.key === "type") {
-        aValue = a.Card?.type;
-        bValue = b.Card?.type;
+        aValue = a.card?.type;
+        bValue = b.card?.type;
       } else {
         aValue = a[sortConfig.key];
         bValue = b[sortConfig.key];
@@ -50,7 +51,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
       entry.card_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entry.status.toString().includes(searchTerm) ||
       entry.time.includes(searchTerm) ||
-      (entry.Card && entry.Card.Users[0]?.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
+      (entry.card && entry.card.Users[0]?.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
@@ -74,6 +75,11 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
 
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-100 sm:px-6 lg:px-8">
+      <Spinner 
+        isOpen={isLoading}
+        onClose={() => setIsLoading(false)}
+        message="Loading....."
+      />
       <div className="mx-auto max-w-7xl">
         <div className="overflow-hidden bg-white rounded-lg shadow-lg">
           <div className="p-6">
@@ -149,7 +155,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
                         {entry.card_id}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        {entry.Card?.Users[0]?.user_name || "Khách"}
+                        {entry.card?.users[0]?.user_name || "Khách"}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
                         {entry.status === 0 ? "Xe vào" : "Xe ra"}
@@ -158,7 +164,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data }) => {
                         {new Date(entry.time).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        {entry.Card?.type === 0 ? "Vé tháng" : "Vé lượt"}
+                        {entry.card?.type === 0 ? "Vé tháng" : "Vé lượt"}
                       </td>
                     </tr>
                   ))}

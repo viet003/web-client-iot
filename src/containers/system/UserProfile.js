@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { FaUser, FaCamera, FaExclamationCircle, FaUserCircle, FaPen } from "react-icons/fa";
+import { FaCamera, FaUserCircle } from "react-icons/fa";
 import User from "../../assets/user.png";
 import * as apiService from "../../services/userService";
 import { useSelector } from "react-redux";
 import { jwtDecode } from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Spinner } from "../../components";
 
 const Profile = () => {
   const { token } = useSelector(state => state.auth);
   const id = token ? jwtDecode(token).id : "";
   // console.log(jwtDecode(token))
-
+  const[isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState({
     id: "",
     user_name: "",
@@ -39,10 +40,12 @@ const Profile = () => {
       console.error("Error fetching data:", error);
       toast.error("Lỗi khi tải dữ liệu.");
     }
+    setIsLoading(false)
   };
 
   const updateData = async (data) => {
     try {
+      setIsLoading(true)
       const response = await apiService.apiUpdateUserById(data);
       if (response?.status === 200 && response?.data?.err === 0) {
         toast.success("Cập nhật thông tin thành công");
@@ -55,6 +58,7 @@ const Profile = () => {
       console.error("Error updating data:", error);
       toast.error("Lỗi khi update dữ liệu.");
     }
+    setIsLoading(false)
   };
 
   useEffect(() => {
@@ -122,8 +126,13 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex min-h-screen px-4 bg-gradient-to-br from-blue-50 to-indigo-50 sm:px-6 lg:px-8">
+    <div className="flex min-h-[calc(100%-100px)] px-4 bg-gradient-to-br from-blue-50 to-indigo-50 sm:px-6 lg:px-8">
       <ToastContainer />
+      <Spinner
+        isOpen={isLoading}
+        onClose={() => setIsLoading(false)}
+        message="Loading....."
+      />
       <div className="mx-auto overflow-hidden bg-white shadow-xl rounded-2xl min-w-[500px] mb-10 mt-4">
         <div className="flex flex-col justify-between gap-10 px-6 py-10 xl:flex-row">
           <div className="xl:pt-4">
@@ -224,7 +233,6 @@ const Profile = () => {
                       className="block w-full px-4 py-3 mt-1 transition-colors duration-200 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                       disabled={!isEditing}
                     >
-                      <option value="">Chọn loại phương tiện</option>
                       <option value="0">Xe máy</option>
                       <option value="1">Ô tô</option>
                     </select>

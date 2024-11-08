@@ -6,9 +6,10 @@ import WebSocketService from "../../services/websocket";
 import useCheckLogin from "../../hooks/useCheckLogin";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
-  
+
   const getData = () => {
     if (WebSocketService.socket && WebSocketService.socket.readyState === WebSocketService.socket.OPEN) {
       WebSocketService.sendMessage({
@@ -17,7 +18,7 @@ function App() {
       });
     }
   }
-  
+
   useCheckLogin();
 
   useEffect(() => {
@@ -34,6 +35,7 @@ function App() {
           switch (message.type) {
             case "get_data":
               setData(message?.body?.data);
+              setIsLoading(false);
               break;
             default:
               break;
@@ -97,7 +99,7 @@ function App() {
   return (
     <div className="flex flex-col">
       <ToastContainer />
-      <Sectiontable isOpen={isOpen} setIsOpen={setIsOpen} data={data} />
+      <Sectiontable isOpen={isOpen} setIsOpen={setIsOpen} data={data} isLoading={isLoading} setIsLoading={setIsLoading} />
     </div>
   );
 }

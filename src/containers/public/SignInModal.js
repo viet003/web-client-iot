@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { path } from "../../ultils/containts";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "../../components";
 
 const SignInModal = ({ isOpen, setIsOpen }) => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
 
   const dispatch = useDispatch()
   const navigator = useNavigate()
-  
+
   const emailDomains = ["@gmail.com", "@yahoo.com", "@outlook.com", "@hotmail.com"];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -67,18 +68,21 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
 
     setLoading(true);
     // Simulate API call
-    const response = await dispatch(actions.login({ email : email, pass_word: password }))
+    const response = await dispatch(actions.login({ email: email, pass_word: password }))
     if (response?.status === 200 && response?.data?.err === 0) {
       setLoading(false)
-      switch (response?.data?.data?.type) {
+      // console.log(response?.data?.type)
+      switch (response?.data?.type) {
         case 0:
           dispatch(actions.logout())
           break;
         case 1:
-          navigator(path.ADMIN)
+          navigator(path.MAIN)
+          dispatch(actions.state({ active: path.MAIN, content: "HOME" }))
           break;
-        default:
-          navigator(path.ADMIN)
+        case 2:
+          navigator(`${path.ADMIN}/${path.HOME}`)
+          dispatch(actions.state({ active: path.HOME, content: "HOME" }))
           break;
       }
       setIsOpen(false)
@@ -87,7 +91,7 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
       toast.warn(response?.data?.msg)
       setLoading(false)
     }
-    
+
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(response?.data);
     setLoading(false);
@@ -95,6 +99,12 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
 
   return (
     <div>
+      <Spinner
+        isOpen={loading}  // Show modal when loading is true
+        onClose={() => setLoading(false)}  // Close modal when loading is done
+        message="Đang đăng nhập..."
+      />
+
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
           <div className="relative w-full max-w-md p-8 transition-all transform bg-white shadow-2xl rounded-xl">

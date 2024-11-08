@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getStatusColor } from './../../../ultils/color';
 import { useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
+import { Spinner } from "../../../components";
 
 const Account = () => {
   const { token } = useSelector(state => state.auth)
@@ -20,7 +21,7 @@ const Account = () => {
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [paginatedAccounts, setPaginatedAccounts] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 5;
   const [editingAccount, setEditingAccount] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -62,6 +63,7 @@ const Account = () => {
       console.error("Error fetching data:", error);
       toast.error("Lỗi khi tải dữ liệu.");
     }
+    setIsLoading(false)
   };
 
 
@@ -103,6 +105,7 @@ const Account = () => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const response = await apiService.apiRegisterService(newAccount);
       if (response?.status === 200 && response?.data?.err === 0) {
@@ -124,6 +127,7 @@ const Account = () => {
       console.error("Error creating account:", error);
       toast.error("Lỗi khi thêm tài khoản.");
     }
+    setIsLoading(false)
   };
 
   const handleEdit = (account) => {
@@ -133,6 +137,7 @@ const Account = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const response = await apiService.apiUpdateUserById(editingAccount);
       if (response?.status === 200 && response?.data?.err === 0) {
@@ -147,9 +152,11 @@ const Account = () => {
       console.error("Error saving data:", error);
       toast.error("Lỗi khi cập nhật dữ liệu.");
     }
+    setIsLoading(false)
   };
 
   const handleDelete = async (id) => {
+    setIsLoading(true)
     try {
       const response = await apiService.apiDeleteUserById({ id });
       if (response?.status === 200 && response?.data?.err === 0) {
@@ -162,13 +169,20 @@ const Account = () => {
       console.error("Error deleting data:", error);
       toast.error("Lỗi khi xóa dữ liệu.");
     }
+    setIsLoading(false)
   };
 
   const handleChangePass = async () => {
+    setIsLoading(true)
     try {
       const response = await apiService.apiChangePassWordService(passWord);
       if (response?.status === 200 && response?.data?.err === 0) {
         toast.success(response?.data?.msg);
+        setPassWord({
+          type: type,
+          email: "",
+          pass_word: ""
+        })
       } else {
         toast.warn(response?.data?.msg);
       }
@@ -176,11 +190,18 @@ const Account = () => {
       console.error("Error data:", error);
       toast.error("Lỗi khi đổi mật khẩu.");
     }
+    setIsLoading(false)
+    setShowChangeModal(false)
   };
 
   return (
     <div className="w-full p-6 bg-white rounded-lg shadow-lg">
       <ToastContainer />
+      <Spinner
+        isOpen={isLoading}
+        onClose={() => setIsLoading(false)}
+        message="Loading....."
+      />
       <div className="flex items-center justify-between mb-4">
         <div className="relative">
           <FiSearch className="absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />

@@ -5,6 +5,7 @@ import * as apiService from "../../../services";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getStatusColor } from "../../../ultils/color";
+import { Spinner } from "../../../components";
 
 const Card = () => {
   const [cards, setCards] = useState([]);
@@ -14,7 +15,7 @@ const Card = () => {
   const [filteredCards, setFilteredCards] = useState([]);
   const [paginatedCards, setPaginatedCards] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-
+  const [isLoading, setIsLoading] = useState(true)
   const itemsPerPage = 5;
   const [editingCard, setEditingCard] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -43,6 +44,7 @@ const Card = () => {
       console.error("Error fetching data:", error);
       toast.error("Lỗi khi tải dữ liệu.");
     }
+    setIsLoading(false)
   };
 
   useEffect(() => {
@@ -83,6 +85,7 @@ const Card = () => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const response = await apiService.apiCreateCard(newCard);
       if (response?.status === 200 && response?.data?.err === 0) {
@@ -100,6 +103,7 @@ const Card = () => {
       console.error("Error creating account:", error);
       toast.error("Lỗi khi thêm tài khoản.");
     }
+    setIsLoading(false)
   };
 
   const handleEdit = (card) => {
@@ -109,6 +113,7 @@ const Card = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const response = await apiService.apiUpdateCardById(editingCard);
       if (response?.status === 200 && response?.data?.err === 0) {
@@ -122,9 +127,11 @@ const Card = () => {
       console.error("Error creating account:", error);
       toast.error("Lỗi khi cập nhật thông tin.");
     }
+    setIsLoading(false)
   };
 
   const handleDelete = async (id) => {
+    setIsLoading(true)
     try {
       const response = await apiService.apiDeleteCardById({ id: id });
       if (response?.status === 200 && response?.data?.err === 0) {
@@ -138,11 +145,17 @@ const Card = () => {
       console.error("Error creating account:", error);
       toast.error("Lỗi khi xóa thông tin.");
     }
+    setIsLoading(false)
   };
 
   return (
     <div className="w-full p-6 bg-white rounded-lg shadow-lg">
       <ToastContainer />
+      <Spinner
+        isOpen={isLoading}
+        onClose={() => setIsLoading(false)}
+        message="Loading....."
+      />
       <div className="flex items-center justify-between mb-4">
         <div className="relative">
           <FiSearch className="absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
