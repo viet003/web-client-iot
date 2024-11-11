@@ -5,7 +5,8 @@ export const path = {
     ADMIN: "admin",
     HOME: "home",
     ACCOUNT:"accounts",
-    CARD:"cards"
+    CARD:"cards",
+    STAR: '*'
 }
 
 // đường dẫn đến các trang

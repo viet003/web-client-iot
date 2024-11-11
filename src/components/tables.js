@@ -1,12 +1,13 @@
 import { FaSort, FaSortUp, FaSortDown, FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import Spinner from "./spinner";
+import { getStatusColor } from "../ultils/color";
 
 const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   console.log(data);
   const itemsPerPage = 6;
 
@@ -51,7 +52,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
       entry.card_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entry.status.toString().includes(searchTerm) ||
       entry.time.includes(searchTerm) ||
-      (entry.card && entry.card.Users[0]?.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
+      (entry.card && entry.card.users[0]?.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
@@ -75,7 +76,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
 
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-100 sm:px-6 lg:px-8">
-      <Spinner 
+      <Spinner
         isOpen={isLoading}
         onClose={() => setIsLoading(false)}
         message="Loading....."
@@ -158,7 +159,9 @@ const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
                         {entry.card?.users[0]?.user_name || "Khách"}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        {entry.status === 0 ? "Xe vào" : "Xe ra"}
+                        <span className={`px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(entry.status)}`}>
+                          {entry.status === 0 ? "Xe vào" : "Xe ra"}
+                        </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
                         {new Date(entry.time).toLocaleString()}

@@ -65,9 +65,9 @@ const Profile = () => {
     fetchData();
   }, [id]);
 
-  const [errors, setErrors] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-
+  
+  const [errors, setErrors] = useState({});
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
@@ -105,24 +105,28 @@ const Profile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleCheckError = (data) => {
     let newErrors = {};
-    Object.keys(formData).forEach((key) => {
+    Object.keys(data).forEach((key) => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
     });
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      console.log(formData)
-      updateData(formData);
-      setIsEditing(false);
-    } else {
+    if (Object.keys(newErrors).length !== 0) {
       Object.values(newErrors).forEach((error) => {
         toast.error(error);
       });
-    }
+      return;
+    } 
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleCheckError(formData)
+    console.log(formData)
+    updateData(formData);
+    setIsEditing(false);
   };
 
   return (

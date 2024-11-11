@@ -9,6 +9,7 @@ import { getStatusColor } from './../../../ultils/color';
 import { useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import { Spinner } from "../../../components";
+import { handleCheckError } from "../../../ultils/checkFunction";
 
 const Account = () => {
   const { token } = useSelector(state => state.auth)
@@ -46,6 +47,7 @@ const Account = () => {
     fetchData();
   }, []);
 
+  
   const fetchData = async () => {
     try {
       const [accountResponse, cardResponse] = await Promise.all([
@@ -53,7 +55,7 @@ const Account = () => {
         apiService.apiGetCardWhithoutAccount()
       ]);
 
-      if (accountResponse?.status === 200 && accountResponse?.data?.err === 0 && cardResponse?.status === 200 && cardResponse?.data?.err === 0) {
+      if (accountResponse?.status === 200 && accountResponse?.data?.err === 0 && cardResponse?.data?.err !== 2) {
         setAccounts(accountResponse?.data?.data);
         setCards(cardResponse?.data?.data)
       } else {
@@ -105,6 +107,9 @@ const Account = () => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    if(handleCheckError(newAccount)) {
+      return; 
+    }
     setIsLoading(true)
     try {
       const response = await apiService.apiRegisterService(newAccount);
@@ -137,6 +142,9 @@ const Account = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if(handleCheckError(editingAccount)) {
+      return; 
+    }
     setIsLoading(true)
     try {
       const response = await apiService.apiUpdateUserById(editingAccount);

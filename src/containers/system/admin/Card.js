@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getStatusColor } from "../../../ultils/color";
 import { Spinner } from "../../../components";
+import { handleCheckError } from "../../../ultils/checkFunction";
 
 const Card = () => {
   const [cards, setCards] = useState([]);
@@ -85,6 +86,9 @@ const Card = () => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    if(handleCheckError(newCard)) {
+      return; 
+    }
     setIsLoading(true)
     try {
       const response = await apiService.apiCreateCard(newCard);
@@ -113,6 +117,9 @@ const Card = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if(handleCheckError(editingCard)) {
+      return; 
+    }
     setIsLoading(true)
     try {
       const response = await apiService.apiUpdateCardById(editingCard);

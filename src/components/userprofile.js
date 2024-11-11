@@ -27,7 +27,7 @@ const UserProfile = ({ toggle }) => {
                     )
                 }
                 <p className="text-[0.75rem] opacity-60 mt-1">
-                    { type === 0 ? "Nhân viên" : type === 1 ? "Quản lý" : "Kế toán"}
+                    { type === 0 ? "Người dùng" : type === 1 ? "Quản lý" : "Quản trị viên"}
                 </p>
             </div>
         </div>

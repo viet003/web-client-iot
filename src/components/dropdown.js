@@ -13,6 +13,7 @@ const DropdownMenu = () => {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const dropdownRef = useRef(null);
   const { token } = useSelector(state => state.auth)
+  const type = token ? jwtDecode(token).type : 0
   const dispatch = useDispatch()
   const navigator = useNavigate();
 
@@ -49,7 +50,7 @@ const DropdownMenu = () => {
 
   return (
     <div
-      className="relative w-full md:w-64"
+      className="relative w-full bg-transparent md:w-64"
       ref={dropdownRef}
       onKeyDown={handleKeyDown}
     >
@@ -57,7 +58,7 @@ const DropdownMenu = () => {
         onClick={toggleDropdown}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        className="flex items-center justify-between w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-white rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex items-center justify-between w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <img src={User} alt="" className={`w-[41px] h-[41px] rounded-full object-cover`} />
         <p className="text-primary cursor-pointer text-[13px] scale-x-0 w-0 sm:w-[57%] sm:scale-100 lg:text-[1rem]">{token ? jwtDecode(token).email : "No user"}</p>
@@ -72,7 +73,7 @@ const DropdownMenu = () => {
           role="menu"
           aria-orientation="vertical"
         >
-          {dropMenuItems.map((item) => (
+          {dropMenuItems(type).map((item) => (
             <div key={item.id}>
               <button
                 className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-600"

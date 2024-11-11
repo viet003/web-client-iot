@@ -26,7 +26,9 @@ const Header = () => {
       <ToastContainer />
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center flex-shrink-0">
+          <div
+            onClick={() => { navigator(path.MAIN) }}
+            className="flex items-center flex-shrink-0 cursor-pointer">
             <img
               className="w-auto h-16"
               src={Logo}
@@ -48,16 +50,16 @@ const Header = () => {
                       navigator(path.MAIN)
                       break;
                     case 3:
-                        if (isLoggedIn) {
-                          navigator(path.CONTROLL)
-                        } else {
-                          toast.warn("Vui lòng đăng nhập để sử dụng dịch vụ")
-                        }
-                      break;
-                      default:
-                        navigator(path.MAIN)
-                        break;
+                      if (isLoggedIn) {
+                        navigator(path.CONTROLL)
+                      } else {
+                        setToggle(!toggle)
                       }
+                      break;
+                    default:
+                      navigator(path.MAIN)
+                      break;
+                  }
                 }}
               >
                 {item.name}

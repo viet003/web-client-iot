@@ -10,12 +10,12 @@ export const headerMenuItems = [
   ];
 
 // menu dropdown
-export const dropMenuItems = [
+export const dropMenuItems = (type) => [
     {
         id: 1,
         label: "Trang chủ",
         icon: <FaHome className="w-5 h-5" />,
-        path: path.MAIN
+        path: type === 1 ? path.MAIN : path.ADMIN
     },
     {
         id: 2,

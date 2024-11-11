@@ -92,6 +92,7 @@ const Spinner = ({
             style={{ color: spinnerColor }}
             role="progressbar"
             aria-valuetext={message}
+            size={20}
           />
           <p
             className="mt-4 text-lg font-medium text-center text-gray-700"

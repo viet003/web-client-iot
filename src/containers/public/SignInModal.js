@@ -78,11 +78,11 @@ const SignInModal = ({ isOpen, setIsOpen }) => {
           break;
         case 1:
           navigator(path.MAIN)
-          dispatch(actions.state({ active: path.MAIN, content: "HOME" }))
+          dispatch(actions.state({ active: path.MAIN, content: "Home" }))
           break;
         case 2:
           navigator(`${path.ADMIN}/${path.HOME}`)
-          dispatch(actions.state({ active: path.HOME, content: "HOME" }))
+          dispatch(actions.state({ active: path.HOME, content: "Home" }))
           break;
       }
       setIsOpen(false)
