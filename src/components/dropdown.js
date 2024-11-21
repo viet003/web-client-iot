@@ -14,6 +14,7 @@ const DropdownMenu = () => {
   const dropdownRef = useRef(null);
   const { token } = useSelector(state => state.auth)
   const type = token ? jwtDecode(token).type : 0
+  console.log(type)
   const dispatch = useDispatch()
   const navigator = useNavigate();
 
@@ -61,7 +62,7 @@ const DropdownMenu = () => {
         className="flex items-center justify-between w-full px-4 py-3 text-gray-800 transition-all duration-300 bg-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <img src={User} alt="" className={`w-[41px] h-[41px] rounded-full object-cover`} />
-        <p className="text-primary cursor-pointer text-[13px] scale-x-0 w-0 sm:w-[57%] sm:scale-100 lg:text-[1rem]">{token ? jwtDecode(token).email : "No user"}</p>
+        <p className="text-primary cursor-pointer text-[13px] whitespace-nowrap overflow-hidden scale-x-0 w-0 sm:w-[57%] sm:scale-100 lg:text-[1rem]">{token ? `Xin chào, ${jwtDecode(token).user_name}` : "No user"}</p>
         <FiChevronDown
           className={`w-5 h-5 transition-transform duration-300 ${isOpen ? "transform rotate-180" : ""}`}
         />

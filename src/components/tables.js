@@ -27,8 +27,8 @@ const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
 
       // Lấy giá trị cần sắp xếp tùy thuộc vào cột
       if (sortConfig.key === "user_name") {
-        aValue = a.card.Users[0]?.user_name || "";
-        bValue = b.card.Users[0]?.user_name || "";
+        aValue = a.card.users[0]?.user_name || "";
+        bValue = b.card.users[0]?.user_name || "";
       } else if (sortConfig.key === "type") {
         aValue = a.card?.type;
         bValue = b.card?.type;
@@ -167,7 +167,7 @@ const Sectiontable = ({ isOpen, setIsOpen, data, isLoading, setIsLoading }) => {
                         {new Date(entry.time).toLocaleString()}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        {entry.card?.type === 0 ? "Vé tháng" : "Vé lượt"}
+                        {entry.card?.type === 0 ? "Thẻ tháng" : "Thẻ lượt"}
                       </td>
                     </tr>
                   ))}

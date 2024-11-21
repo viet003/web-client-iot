@@ -6,8 +6,7 @@ import { jwtDecode } from "jwt-decode";
 const UserProfile = ({ toggle }) => {
 
     const { token } = useSelector(state => state.auth)
-    const id = token ? jwtDecode(token).id : "No user"
-    const name = token ? jwtDecode(token).email : "Admin"
+    const email = token ? jwtDecode(token).email : "Admin"
     const type = token ? jwtDecode(token).type : ""
     // console.log(jwtDecode(token).name)
     return (
@@ -16,16 +15,7 @@ const UserProfile = ({ toggle }) => {
                 <img src={user} alt="" className={`w-[3rem] h-full rounded-full object-cover ${toggle ? "text-white transition-all" : "text-black"}`} />
             </div>
             <div className={toggle ? "opacity-0 transition-opacity text-white" : "opacity-100 duration-300"}>
-                {
-                    true && (
-                        <p className="overflow-hidden text-sm whitespace-no-wrap overflow-ellipsis">{name}</p>
-                    )
-                }
-                {
-                    type === "Quản trị viên" && (
-                        <p className="overflow-hidden text-sm whitespace-no-wrap overflow-ellipsis">Admin</p>
-                    )
-                }
+                <p className="overflow-hidden text-sm whitespace-no-wrap w-[100px]">{email}</p>
                 <p className="text-[0.75rem] opacity-60 mt-1">
                     { type === 0 ? "Người dùng" : type === 1 ? "Quản lý" : "Quản trị viên"}
                 </p>

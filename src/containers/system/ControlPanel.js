@@ -19,8 +19,6 @@ function App() {
     }
   }
 
-  useCheckLogin();
-
   useEffect(() => {
     // Kết nối đến WebSocket Server
     WebSocketService.connect(process.env.REACT_APP_WEBSOCKET_URL);
@@ -44,12 +42,7 @@ function App() {
         case "esp8266":
           switch (message.type) {
             case "cmd":
-              toast.success(message?.body);
-              break;
-            case "warn":
-              toast.warn(message?.body?.msg);
-              break;
-            case "success":
+              setIsOpen(message?.body?.status ?? 1);
               getData();
               break;
             default:
@@ -60,6 +53,9 @@ function App() {
           switch (message.type) {
             case "error":
               toast.success(message?.body?.msg);
+              break;
+            case "warn":
+              toast.warn(message?.body?.msg);
               break;
             default:
               break;
