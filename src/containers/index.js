@@ -6,4 +6,5 @@ export { default as UserProfile } from "./system/UserProfile"
 export { default as Admin } from "./system/admin/Admin"
 export { default as Card } from "./system/admin/Card"
 export { default as Account } from "./system/admin/Account"
+export { default as Bill } from "./system/admin/Bill"
 

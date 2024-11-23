@@ -8,6 +8,7 @@ import { path } from "../ultils/containts";
 import { IoCardSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
+import { BsPaypal } from "react-icons/bs";
 
 const SideBar = (props) => {
     const navigate = useNavigate();
@@ -64,6 +65,13 @@ const SideBar = (props) => {
                 >
                     <div className="mr-8 text-[1.7rem]"><IoCardSharp /></div>
                     <div className={`${toggle ? "opacity-0 " : "transition-opacity "} text-[14px] whitespace-pre`}>Thẻ xe</div>
+                </div>
+                <div
+                    onClick={() => handleNavigation("Quản lý dư nợ", path.BILL)}
+                    className={`${toggle ? "w-[3.5rem]" : "w-[12rem]"} sideData ${activeItem === path.BILL ? "text-black bg-white" : ""}`}
+                >
+                    <div className="mr-8 text-[1.7rem]"><BsPaypal /></div>
+                    <div className={`${toggle ? "opacity-0 " : "transition-opacity "} text-[14px] whitespace-pre`}>Dư nợ</div>
                 </div>
             </div>
 

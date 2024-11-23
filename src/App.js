@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { UserProfile, Main, Home, ControlPanel, Admin, Account, Card } from "./containers/";
+import { UserProfile, Main, Home, ControlPanel, Admin, Account, Card, Bill } from "./containers/";
 import { path } from "./ultils/containts";
 import { useSelector, useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
@@ -42,6 +42,7 @@ function App() {
           <Route path={path.PROFILE} element={<UserProfile />} />
           <Route path={path.ACCOUNT} element={<Account />} />
           <Route path={path.CARD} element={<Card />} />
+          <Route path={path.BILL} element={<Bill />} />
           <Route path={path.STAR} element={<Home />} />
         </Route>
 

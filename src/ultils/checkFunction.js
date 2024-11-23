@@ -10,7 +10,7 @@ export const validateField = (name, value) => {
       case "vehicle_type":
         break;
       default:
-        error = !Number.isInteger(value) && value.trim() === "" ? "Không được bỏ trống thông tin" : "";
+        // error = !Number.isInteger(value) && value.trim() === "" ? "Không được bỏ trống thông tin" : "";
         break
     }
     return error;

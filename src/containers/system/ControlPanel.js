@@ -6,11 +6,11 @@ import WebSocketService from "../../services/websocket";
 import useCheckLogin from "../../hooks/useCheckLogin";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
 
-  const getData = () => {
+  const getData = async () => {
     if (WebSocketService.socket && WebSocketService.socket.readyState === WebSocketService.socket.OPEN) {
       WebSocketService.sendMessage({
         sender: "react",
@@ -32,8 +32,9 @@ function App() {
         case "react":
           switch (message.type) {
             case "get_data":
+              setIsLoading(true)
               setData(message?.body?.data);
-              setIsLoading(false);
+              setIsLoading(false)
               break;
             default:
               break;
@@ -42,8 +43,10 @@ function App() {
         case "esp8266":
           switch (message.type) {
             case "cmd":
-              setIsOpen(message?.body?.status ?? 1);
+              setIsOpen(message?.body?.status === 0 ? true : false);
+              setIsLoading(true)
               getData();
+              setIsLoading(false)
               break;
             default:
               break;
@@ -52,7 +55,7 @@ function App() {
         case "server":
           switch (message.type) {
             case "error":
-              toast.success(message?.body?.msg);
+              toast.error(message?.body?.msg);
               break;
             case "warn":
               toast.warn(message?.body?.msg);

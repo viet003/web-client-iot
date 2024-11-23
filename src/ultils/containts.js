@@ -1,11 +1,12 @@
 export const path = {
-    MAIN : "/",
+    MAIN: "/",
     CONTROLL: "controll",
     PROFILE: "profile",
     ADMIN: "admin",
     HOME: "home",
-    ACCOUNT:"accounts",
-    CARD:"cards",
+    ACCOUNT: "accounts",
+    CARD: "cards",
+    BILL: "bill",
     STAR: '*'
 }
 
