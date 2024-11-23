@@ -3,12 +3,19 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WebSocketService from "../../services/websocket";
-import useCheckLogin from "../../hooks/useCheckLogin";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
+
+  const [guestData, setGuestData] = useState({
+    sender: 'react',
+    type: 'info',
+    body: {
+      card_id: "",
+    }
+  })
 
   const getData = async () => {
     if (WebSocketService.socket && WebSocketService.socket.readyState === WebSocketService.socket.OPEN) {
@@ -47,6 +54,20 @@ function App() {
               setIsLoading(true)
               getData();
               setIsLoading(false)
+              break;
+            case "info":
+              toast.warn(message?.body?.msg);
+              setGuestData(prev => ({ ...prev, card_id: message?.body?.card_id }));
+              console.log(guestData);
+              setTimeout(() => {
+                setGuestData({
+                  sender: 'react',
+                  type: 'info',
+                  body: {
+                    card_id: "",
+                  }
+                })
+              }, (100000));
               break;
             default:
               break;

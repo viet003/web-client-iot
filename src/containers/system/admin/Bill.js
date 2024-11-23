@@ -217,7 +217,7 @@ const Bill = () => {
                         {paginatedBills.map((bill) => (
                             <tr key={bill.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{bill.id}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{bill.card_id}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{bill.card_id.toUpperCase()}</td>
                                 <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
                                     {bill.total.toLocaleString()} VND
                                 </td>

@@ -15,7 +15,7 @@ const UserProfile = ({ toggle }) => {
                 <img src={user} alt="" className={`w-[3rem] h-full rounded-full object-cover ${toggle ? "text-white transition-all" : "text-black"}`} />
             </div>
             <div className={toggle ? "opacity-0 transition-opacity text-white" : "opacity-100 duration-300"}>
-                <p className="overflow-hidden text-sm whitespace-no-wrap w-[100px]">{email}</p>
+                <p className="overflow-hidden text-sm whitespace-no-wrap w-[100px]">{email.split('@')[0]}</p>
                 <p className="text-[0.75rem] opacity-60 mt-1">
                     { type === 0 ? "Người dùng" : type === 1 ? "Quản lý" : "Quản trị viên"}
                 </p>

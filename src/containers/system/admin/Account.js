@@ -262,7 +262,7 @@ const Account = () => {
               <tr key={account.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{account.email}</td>
                 <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{account.user_name}</td>
-                <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{account.card_id}</td>
+                <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{account.card_id.toUpperCase()}</td>
                 <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
                   <span className={`px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(account.vehicle_type)}`}>
                     {account.vehicle_type === 0 ? "Xe máy" : "Ô tô"}
